@@ -1,0 +1,28 @@
+.loginContainer {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  background-image: url("/images/login_background.jpg");
+  background-size: cover;
+}
+
+.loginBox {
+  display: flex;
+  flex-direction: column;
+  background-color: hsla(221, 32%, 40%, 0.8);
+  padding: 30px 30px;
+  border-radius: 2px;
+}
+
+.loginBox h1 {
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.loginBox .link-button {
+  color: #fff;
+  align-self: flex-end;
+}
