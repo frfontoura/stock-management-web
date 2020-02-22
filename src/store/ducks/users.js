@@ -5,7 +5,6 @@ export const Types = {
 
 const INITIAL_STATE = {
   user: null,
-  isLoading: false,
 };
 
 export default function users(state = INITIAL_STATE, action) {

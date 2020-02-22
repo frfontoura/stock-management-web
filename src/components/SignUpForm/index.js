@@ -1,19 +1,20 @@
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
 import api from '../../services/api';
+import { signIn } from '../../services/auth';
 import Input from '../Input';
 import PrimaryButton from '../PrimaryButton';
-import { Creators as UserActions } from '../../store/ducks/users';
 
 import './styles.css';
 
 /**
  * Sign Up form component
  */
-export default function SignUpForm() {
+function SignUpForm({ history }) {
   const formRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -67,11 +68,7 @@ export default function SignUpForm() {
       await validate(data);
       const res = await api.post('/signup', data);
       if (res.status === 201) {
-        await api.post('/login', {
-          username: data.username,
-          password: data.password,
-        });
-        dispatch(UserActions.signIn(res.data));
+        signIn(data, dispatch, history);
       }
     } catch (err) {
       handleError(err);
@@ -91,3 +88,5 @@ export default function SignUpForm() {
     </div>
   );
 }
+
+export default withRouter(SignUpForm);

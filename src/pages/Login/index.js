@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import SignInForm from '../../components/SignInForm';
 import SignUpForm from '../../components/SignUpForm';
 import './styles.css';
 
-export default function Login() {
+function Login({ history }) {
   const [isSignIn, setSignIn] = useState(true);
+  const user = useSelector(state => state.users.user);
+
+  useEffect(() => {
+    if (user) {
+      history.push('/dashboard');
+    }
+  }, [user, history]);
 
   function handleSignInSignUp(e) {
     e.preventDefault();
@@ -30,3 +39,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default withRouter(Login);

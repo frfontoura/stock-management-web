@@ -1,19 +1,19 @@
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
-import api from '../../services/api';
+import { signIn } from '../../services/auth';
 import Input from '../Input';
 import PrimaryButton from '../PrimaryButton';
-import { Creators as UserActions } from '../../store/ducks/users';
 
 import './styles.css';
 
 /**
  * Sign In form component
  */
-export default function SignInForm() {
+function SignInForm({ history }) {
   const formRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -61,8 +61,7 @@ export default function SignInForm() {
   async function handleSubmit(data) {
     try {
       await validate(data);
-      const res = await api.post('/login', data);
-      dispatch(UserActions.signIn(res.data));
+      signIn(data, dispatch, history);
     } catch (err) {
       handleError(err);
     }
@@ -78,3 +77,5 @@ export default function SignInForm() {
     </div>
   );
 }
+
+export default withRouter(SignInForm);
