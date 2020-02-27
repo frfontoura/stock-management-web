@@ -1,20 +1,18 @@
 import React, { useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
-import { signIn } from '../../services/auth';
-
+import api from '../../services/api';
+import { Creators as PortfolioActions } from '../../store/ducks/portfolios';
 import Input from '../Input';
 import PrimaryButton from '../PrimaryButton';
-import { Form } from './styles';
 
-/**
- * Sign In form component
- */
-function SignInForm({ history }) {
+import { Container, Form, Title } from './styles';
+
+export default function PortfolioForm() {
   const formRef = useRef(null);
   const dispatch = useDispatch();
+  const userId = useSelector(state => state.users.user.id);
 
   /**
    * Validates that the form data are correct
@@ -24,11 +22,11 @@ function SignInForm({ history }) {
   async function validate(data) {
     formRef.current.setErrors({});
     const schema = Yup.object().shape({
-      username: Yup.string()
-        .min(6)
+      name: Yup.string()
+        .min(3)
         .required(),
-      password: Yup.string()
-        .min(6)
+      description: Yup.string()
+        .min(3)
         .required(),
     });
 
@@ -57,22 +55,27 @@ function SignInForm({ history }) {
    *
    * @param {object} data Object sent by Unform
    */
-  async function handleSubmit(data) {
+  async function handleSubmit(data, { reset }) {
     try {
       await validate(data);
-      signIn(data, dispatch, history);
+      const res = await api.post(`/api/users/${userId}/portfolios`, data);
+      if (res.status === 201) {
+        dispatch(PortfolioActions.added(res.data));
+        reset();
+      }
     } catch (err) {
       handleError(err);
     }
   }
 
   return (
-    <Form ref={formRef} onSubmit={handleSubmit}>
-      <Input type="text" placeholder="Username" name="username" />
-      <Input type="password" placeholder="Password" name="password" />
-      <PrimaryButton text="Sign In" />
-    </Form>
+    <Container>
+      <Title>Add Portfolio</Title>
+      <Form ref={formRef} onSubmit={handleSubmit}>
+        <Input type="text" placeholder="Portfolio Name" name="name" />
+        <Input type="text" placeholder="Description" name="description" />
+        <PrimaryButton text="Add" />
+      </Form>
+    </Container>
   );
 }
-
-export default withRouter(SignInForm);

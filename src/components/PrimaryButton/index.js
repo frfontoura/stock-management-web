@@ -1,11 +1,7 @@
 import React from 'react';
 
-import './styles.css';
+import { Button } from './styles';
 
 export default function PrimaryButton({ text }) {
-  return (
-    <button className="primary-button" type="submit">
-      {text}
-    </button>
-  );
+  return <Button type="submit">{text}</Button>;
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useField } from '@unform/core';
 
-import './styles.css';
+import { InputText, Error } from './styles';
 
 export default function Input({ name, ...rest }) {
   const inputRef = useRef(null);
@@ -17,14 +17,9 @@ export default function Input({ name, ...rest }) {
 
   return (
     <>
-      <input
-        ref={inputRef}
-        defaultValue={defaultValue}
-        className={error ? 'has-error' : ''}
-        {...rest}
-      />
+      <InputText ref={inputRef} defaultValue={defaultValue} {...rest} />
 
-      {error && <span className="error">{error}</span>}
+      {error && <Error>* {error}</Error>}
     </>
   );
 }

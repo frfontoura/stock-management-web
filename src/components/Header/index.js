@@ -1,7 +1,10 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { GoSignOut } from 'react-icons/go';
 import { signOut } from '../../services/auth';
+
+import { Container, Title, LogoutButton } from './styles';
 
 function Header({ history }) {
   const user = useSelector(state => state.users.user);
@@ -9,17 +12,18 @@ function Header({ history }) {
 
   function handleLogout(e) {
     e.preventDefault();
-
     signOut(dispatch, history);
   }
 
   return user ? (
-    <header>
-      <h1>Stock Management</h1>
-      <button type="button" onClick={handleLogout}>
-        Logout
-      </button>
-    </header>
+    <Container>
+      <Link to="/dashboard">
+        <Title>Stock Management</Title>
+      </Link>
+      <LogoutButton type="button" onClick={handleLogout} title="Logout">
+        <GoSignOut size={32} color="#fff" />
+      </LogoutButton>
+    </Container>
   ) : null;
 }
 

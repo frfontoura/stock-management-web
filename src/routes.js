@@ -11,10 +11,10 @@ const Routes = ({ location }) => (
     <Route exact path="/">
       <Login />
     </Route>
-    <PrivateRoute exact path="/dashboard">
+    <PrivateRoute exact path="/dashboard" title="Dashboard">
       <Dashboard />
     </PrivateRoute>
-    <PrivateRoute exact path="/portfolios">
+    <PrivateRoute exact path="/portfolios" title="Portfolios">
       <Portfolios />
     </PrivateRoute>
     <Route path="*">

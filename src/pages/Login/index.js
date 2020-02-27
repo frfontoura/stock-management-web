@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import LinkButton from '../../components/LinkButton';
 import SignInForm from '../../components/SignInForm';
 import SignUpForm from '../../components/SignUpForm';
-import './styles.css';
+
+import { Container, LoginBox, Title } from './styles';
 
 function Login({ history }) {
   const [isSignIn, setSignIn] = useState(true);
@@ -22,21 +24,19 @@ function Login({ history }) {
   }
 
   return (
-    <div className="loginContainer">
-      <div className="loginBox">
-        <h1>Stock Management</h1>
+    <Container>
+      <LoginBox>
+        <Title>Stock Management</Title>
 
         {isSignIn ? <SignInForm /> : <SignUpForm />}
 
-        <button
-          className="link-button"
-          type="button"
-          onClick={handleSignInSignUp}
-        >
-          {isSignIn ? 'Sign Up' : 'Sign In'}
-        </button>
-      </div>
-    </div>
+        <LinkButton
+          text={isSignIn ? 'Sign Up' : 'Sign In'}
+          handleOnClick={handleSignInSignUp}
+          styles={{ alignSelf: 'flex-end' }}
+        />
+      </LoginBox>
+    </Container>
   );
 }
 

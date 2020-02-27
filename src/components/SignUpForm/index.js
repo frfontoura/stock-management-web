@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
 import api from '../../services/api';
@@ -9,7 +8,7 @@ import { signIn } from '../../services/auth';
 import Input from '../Input';
 import PrimaryButton from '../PrimaryButton';
 
-import './styles.css';
+import { Form } from './styles';
 
 /**
  * Sign Up form component
@@ -76,16 +75,14 @@ function SignUpForm({ history }) {
   }
 
   return (
-    <div className="formContainer">
-      <Form ref={formRef} onSubmit={handleSubmit}>
-        <Input type="text" placeholder="Name" name="name" />
-        <Input type="text" placeholder="Username" name="username" />
-        <Input type="email" placeholder="Email" name="email" />
-        <Input type="password" placeholder="Password" name="password" />
+    <Form ref={formRef} onSubmit={handleSubmit}>
+      <Input type="text" placeholder="Name" name="name" />
+      <Input type="text" placeholder="Username" name="username" />
+      <Input type="email" placeholder="Email" name="email" />
+      <Input type="password" placeholder="Password" name="password" />
 
-        <PrimaryButton text="Sign Up" />
-      </Form>
-    </div>
+      <PrimaryButton text="Sign Up" />
+    </Form>
   );
 }
 

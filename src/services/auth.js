@@ -20,7 +20,9 @@ async function loadUser(store, history) {
       store.dispatch(UserActions.signIn(res.data));
       history.push('/dashboard');
     }
-  } catch (err) {}
+  } catch (err) {
+    localStorage.removeItem('jwt_token');
+  }
 }
 
 /**

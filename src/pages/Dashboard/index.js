@@ -1,13 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-// import { Container } from './styles';
+import PortfolioForm from '../../components/PortfolioForm';
+import PortfolioList from '../../components/PortfolioList';
+
+import { Container, Content, FormContainer } from './styles';
 
 export default function Dashboard() {
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <Link to="/portfolios">About</Link>
-    </div>
+    <Container>
+      <FormContainer>
+        <PortfolioForm />
+      </FormContainer>
+
+      <Content>
+        <PortfolioList />
+      </Content>
+    </Container>
   );
 }
