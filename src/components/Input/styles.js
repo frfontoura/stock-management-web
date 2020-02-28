@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const InputText = styled.input`
   height: 32px;
   font-size: 14px;
-  color: ${props => props.theme.colors.inputText};
+  color: ${props => props.theme.colors.textInverse};
   border: 0;
   border-radius: 2px;
   padding: 5px;

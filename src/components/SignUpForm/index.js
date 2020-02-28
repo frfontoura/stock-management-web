@@ -81,7 +81,7 @@ function SignUpForm({ history }) {
       <Input type="email" placeholder="Email" name="email" />
       <Input type="password" placeholder="Password" name="password" />
 
-      <PrimaryButton text="Sign Up" />
+      <PrimaryButton text="Sign Up" type="submit" />
     </Form>
   );
 }

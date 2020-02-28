@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
@@ -6,6 +6,7 @@ import api from '../../services/api';
 import { Creators as PortfolioActions } from '../../store/ducks/portfolios';
 import Input from '../Input';
 import PrimaryButton from '../PrimaryButton';
+import SecundaryButton from '../SecundaryButton';
 
 import { Container, Form, Title } from './styles';
 
@@ -13,6 +14,13 @@ export default function PortfolioForm() {
   const formRef = useRef(null);
   const dispatch = useDispatch();
   const userId = useSelector(state => state.users.user.id);
+  const portfolio = useSelector(state => state.portfolios.portfolio);
+
+  useEffect(() => {
+    if (portfolio) {
+      formRef.current.setData(portfolio);
+    }
+  }, [portfolio]);
 
   /**
    * Validates that the form data are correct
@@ -50,6 +58,25 @@ export default function PortfolioForm() {
     }
   }
 
+  async function handleCreate(data, reset) {
+    const res = await api.post(`/api/users/${userId}/portfolios`, data);
+    if (res.status === 201) {
+      dispatch(PortfolioActions.added(res.data));
+      reset();
+    }
+  }
+
+  async function handleEdit(data, reset) {
+    const res = await api.put(
+      `/api/users/${userId}/portfolios/${portfolio.id}`,
+      data
+    );
+    if (res.status === 200) {
+      dispatch(PortfolioActions.edited(res.data));
+      reset();
+    }
+  }
+
   /**
    * Function responsible for user login
    *
@@ -58,23 +85,34 @@ export default function PortfolioForm() {
   async function handleSubmit(data, { reset }) {
     try {
       await validate(data);
-      const res = await api.post(`/api/users/${userId}/portfolios`, data);
-      if (res.status === 201) {
-        dispatch(PortfolioActions.added(res.data));
-        reset();
+
+      if (portfolio) {
+        handleEdit(data, reset);
+      } else {
+        handleCreate(data, reset);
       }
     } catch (err) {
       handleError(err);
     }
   }
 
+  function handleCancel(e) {
+    e.preventDefault();
+    formRef.current.reset();
+
+    if (portfolio) {
+      dispatch(PortfolioActions.edit(null));
+    }
+  }
+
   return (
     <Container>
       <Title>Add Portfolio</Title>
-      <Form ref={formRef} onSubmit={handleSubmit}>
+      <Form ref={formRef} onSubmit={handleSubmit} initialData={portfolio}>
         <Input type="text" placeholder="Portfolio Name" name="name" />
         <Input type="text" placeholder="Description" name="description" />
-        <PrimaryButton text="Add" />
+        <PrimaryButton text="Save" type="submit" />
+        <SecundaryButton text="Cancel" type="button" onClick={handleCancel} />
       </Form>
     </Container>
   );

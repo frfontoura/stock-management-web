@@ -70,7 +70,7 @@ function SignInForm({ history }) {
     <Form ref={formRef} onSubmit={handleSubmit}>
       <Input type="text" placeholder="Username" name="username" />
       <Input type="password" placeholder="Password" name="password" />
-      <PrimaryButton text="Sign In" />
+      <PrimaryButton text="Sign In" type="submit" />
     </Form>
   );
 }

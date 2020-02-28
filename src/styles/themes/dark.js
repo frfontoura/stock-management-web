@@ -9,10 +9,11 @@ export default {
     background: '#222222',
     backgroundInverse: '#dddddd',
     text: '#dddddd',
-    inputText: '#222',
+    textInverse: '#222222',
   },
 
   fonts: {
-    fontSize: '14px',
+    sizeRegular: '14px',
+    sizeSmall: '12px',
   },
 };

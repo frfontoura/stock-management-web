@@ -10,7 +10,7 @@ export default createGlobalStyle`
 
   body {
     background: ${props => props.theme.colors.background};
-    font-size: ${props => props.theme.fonts.fontSize};
+    font-size: ${props => props.theme.fonts.sizeRegular};
     color: ${props => props.theme.colors.text};
     font-family: Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;

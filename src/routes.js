@@ -11,12 +11,19 @@ const Routes = ({ location }) => (
     <Route exact path="/">
       <Login />
     </Route>
-    <PrivateRoute exact path="/dashboard" title="Dashboard">
+
+    <PrivateRoute exact path="/dashboard" title="StockManagement - Dashboard">
       <Dashboard />
     </PrivateRoute>
-    <PrivateRoute exact path="/portfolios" title="Portfolios">
+
+    <PrivateRoute
+      exact
+      path="/portfolios/:portfolioId"
+      title="StockManagement - Portfolios"
+    >
       <Portfolios />
     </PrivateRoute>
+
     <Route path="*">
       <Redirect to={{ pathname: '/dashboard', state: { from: location } }} />
     </Route>

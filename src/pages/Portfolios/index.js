@@ -1,7 +1,10 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 // import { Container } from './styles';
 
 export default function Portfolios() {
-  return <div>Portfolios</div>;
+  const { portfolioId } = useParams();
+
+  return <div>Portfolio {portfolioId}</div>;
 }
